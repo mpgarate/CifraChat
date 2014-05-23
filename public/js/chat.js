@@ -32,7 +32,7 @@ window.onload = function() {
       username: name.value, message: field.value
     });
     
-    name.value = field.value = ""; // clear fields after sending
+    field.value = ""; // clear message field after sending
   }
 
   // button click and enter key press handlers for form
