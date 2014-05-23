@@ -1,0 +1,10 @@
+{
+    "name": "CifraChat",
+    "version": "0.0.0",
+    "description": "Encrypted instant messaging",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest"
+    },
+    "author": "developer"
+}
