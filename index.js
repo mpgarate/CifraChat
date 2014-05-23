@@ -7,7 +7,7 @@ var port = 8080;
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.get("/", function(req, res){
-    res.render("index.ejs");
+  res.render("index.ejs");
 });
 
 // allow access to /public directory
@@ -24,7 +24,7 @@ io.sockets.on('connection', function (clntSocket) {
 	clntSocket.emit('message', { message: 'Welcome to CifraChat.' });
 	
 	// all data sent by the user is forwarded to other users
-    clntSocket.on('send', function (text) {
-		io.sockets.emit('message', text);
-    });
+  clntSocket.on('send', function (text) {
+	  io.sockets.emit('message', text);
+  });
 });
