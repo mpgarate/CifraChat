@@ -9,7 +9,7 @@ module.exports = function(app,io){
 
 	app.get('/', function(req, res){
 		// Render views/index.html
-		res.render('index');
+		res.render('index.ejs');
 	});
 
 	app.get('/create', function(req,res){
@@ -22,8 +22,7 @@ module.exports = function(app,io){
 	});
 
 	app.get('/chat/:id', function(req,res){
-
-		// Render the chant.html view
+		// Render the chat.html view
 		res.render('chat');
 	});
 

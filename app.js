@@ -7,10 +7,6 @@ var port = 8080;
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
-app.get("/", function(req, res){
-  res.render("index.ejs");
-});
-
 // allow access to /public directory
 app.use('/public', express.static(__dirname + '/public'));
 
