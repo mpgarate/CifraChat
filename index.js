@@ -20,11 +20,11 @@ var io = require('socket.io').listen(app.listen(port));
 
 /* socket io stuff */
 io.sockets.on('connection', function (clntSocket) {
-	// welcomes on succesful connection
-	clntSocket.emit('message', { message: 'Welcome to CifraChat.' });
-	
-	// all data sent by the user is forwarded to other users
+  // welcomes on succesful connection
+  clntSocket.emit('message', { message: 'Welcome to CifraChat.' });
+  
+  // all data sent by the user is forwarded to other users
   clntSocket.on('send', function (text) {
-	  io.sockets.emit('message', text);
+    io.sockets.emit('message', text);
   });
 });
