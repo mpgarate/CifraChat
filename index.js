@@ -3,7 +3,7 @@ var app = express();
 var port = 8080;
  
 /* used this http://stackoverflow.com/questions/4529586/
- * to put in ejs */ 
+ * to put in ejs (remember to 'npm install ejs') */ 
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.get("/", function(req, res){
