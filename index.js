@@ -19,14 +19,12 @@ console.log("Listening on port " + port);
 var io = require('socket.io').listen(app.listen(port));
 
 /* socket io stuff */
-io.sockets.on('connection', function (socket) {
-    // socket object == client socket
-	
+io.sockets.on('connection', function (clntSocket) {
 	// welcomes on succesful connection
-	socket.emit('message', { message: 'welcome to the chat' });
+	clntSocket.emit('message', { message: 'Welcome to CifraChat.' });
 	
 	// all data sent by the user is forwarded to other users
-    socket.on('send', function (data) {
-        io.sockets.emit('message', data);
+    clntSocket.on('send', function (text) {
+		io.sockets.emit('message', text);
     });
 });

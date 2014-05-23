@@ -4,23 +4,31 @@ window.onload = function() {
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
-
+	var name = document.getElementById("name");
+	
     socket.on('message', function (data) {
         if(data.message) {
-            messages.push(data.message);
+            messages.push(data);
             var html = '';
-            for(var i=0; i<messages.length; i++) {
-                html += messages[i] + '<br />';
+			
+			alert("Number of messages: " + messages.length);
+			
+			for(var i = 0; i < messages.length; i++)
+			{
+                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+                html += messages[i].message + '<br />';
             }
             content.innerHTML = html;
+			content.scrollTop = content.scrollHeight;
+			
         } else {
-            console.log("There is a problem:", data);
+            console.log("There is a problem: ", data);
         }
     });
  
     sendButton.onclick = function()
 	{
-		var text = field.value;
-        socket.emit('send', { message: text });
+        socket.emit('send', { username: name.value, message: field.value });
+		name.value = field.value = ""; // clear fields after sending
     };
 }
