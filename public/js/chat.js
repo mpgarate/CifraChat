@@ -25,11 +25,26 @@ window.onload = function() {
     }
   });
 
-  sendButton.onclick = function(){
+  // send a message from the data in the form
+
+  function sendMessage(){
     socket.emit('send', {
       username: name.value, message: field.value
     });
     
     name.value = field.value = ""; // clear fields after sending
+  }
+
+  // button click and enter key press handlers for form
+
+  sendButton.onclick = function(){
+    sendMessage();
   };
+  
+  field.onkeypress = function(e){
+    console.log("got here");
+    if (e.keyCode == 13){
+      sendMessage();
+    }
+  }
 }
