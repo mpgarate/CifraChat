@@ -10,5 +10,20 @@ app.get("/", function(req, res){
     res.render("index.html");
 });
 
-app.listen(port);
 console.log("Listening on port " + port);
+
+/* this line passes the ExpressJS server to Socket.io */
+var io = require('socket.io').listen(app.listen(port));
+
+/* socket io stuff */
+io.sockets.on('connection', function (socket) {
+    // socket object == client socket
+	
+	// welcomes on succesful connection
+	socket.emit('message', { message: 'welcome to the chat' });
+	
+	// all data sent by the user is forwarded to other users
+    socket.on('send', function (data) {
+        io.sockets.emit('message', data);
+    });
+});
