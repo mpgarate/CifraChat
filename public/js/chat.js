@@ -8,20 +8,15 @@ window.onload = function() {
   
   socket.on('message', function (data) {
     if(data.message) {
-      messages.push(data);
-      var html = '';
+      var html = content.innerHTML;
       
-      console.log("Number of messages: " + messages.length);
-      
-      for(var i = 0; i < messages.length; i++){
-        var m = messages[i].message;
-        html += '<div class="message-wrapper" data-encmsg="' + m + '">';
-        html += '<b>' + 'Other' + ': </b>';
-        html += '<input class="input-box message-code">';
-        html += '<input type="button" class="apply-message-code" value="apply"><br />';
-        html += '<p class="message message-' + i + '">';
-        html += m + '</p></div><br />';
-      }
+      var m = data.message;
+      html += '<div class="message-wrapper" data-encmsg="' + m + '">';
+      html += '<b>' + 'Other' + ': </b>';
+      html += '<input class="input-box message-code">';
+      html += '<input type="button" class="apply-message-code" value="apply"><br />';
+      html += '<p class="message">';
+      html += m + '</p></div><br />';
 
       content.innerHTML = html;
       content.scrollTop = content.scrollHeight;
