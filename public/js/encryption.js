@@ -1,15 +1,17 @@
-function encrypt_message(message,password){
+function encryptMessage(message,password){
   if (typeof password === 'undefined'){
     password = "tRe_haxucr6hej8s";
+    console.log("replaced password (encrypt)");
   }
 
   var encrypted = CryptoJS.AES.encrypt(message, password);
   return encrypted.toString();
 }
 
-function decrypt_message(message,password){
+function decryptMessage(message,password){
   if (typeof password === 'undefined'){
     password = "tRe_haxucr6hej8s";
+    console.log("replaced password (decrypt)");
   }
 
   var decrypted = CryptoJS.AES.decrypt(message, password);

@@ -4,7 +4,7 @@ window.onload = function() {
   var field = document.getElementById("field");
   var sendButton = document.getElementById("send");
   var content = document.getElementById("content");
-  var name = document.getElementById("name");
+  var passwordField = document.getElementById("password");
   
   socket.on('message', function (data) {
     if(data.message) {
@@ -14,26 +14,48 @@ window.onload = function() {
       console.log("Number of messages: " + messages.length);
       
       for(var i = 0; i < messages.length; i++){
-        var decypted_message = decrypt_message(messages[i].message);
-
-        html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-        html += decypted_message + '<br />';
+        var m = messages[i].message;
+        html += '<div class="message-wrapper" data-encmsg="' + m + '">';
+        html += '<b>' + 'Other' + ': </b>';
+        html += '<input class="input-box message-code">';
+        html += '<input type="button" class="apply-message-code" value="apply"><br />';
+        html += '<p class="message message-' + i + '">';
+        html += m + '</p></div><br />';
       }
 
       content.innerHTML = html;
       content.scrollTop = content.scrollHeight;
+
+      createCodeEntryHandler();
+
     } else {
       console.log("There is a problem: ", data);
     }
   });
 
+  function createCodeEntryHandler(){
+    $('.apply-message-code').click(function(){
+      var parent = $(this).parent();
+      var message_tag = parent.find(".message");
+      var password = parent.find(".message-code").val();
+      var encrypted_msg = parent.data("encmsg");
+
+      var decrypted_msg = decryptMessage(encrypted_msg, password);
+
+      message_tag.html(decrypted_msg);
+    });
+  }
+
   // send a message from the data in the form
 
   function sendMessage(){
-    var encrypted_msg = encrypt_message(field.value);
-    console.log(encrypted_msg);
+    var message = field.value;
+
+    var password = passwordField.value;
+    var encrypted_msg = encryptMessage(message,password);
+
     socket.emit('send', {
-      username: name.value, message: encrypted_msg
+      message: encrypted_msg
     });
     
     field.value = ""; // clear message field after sending
