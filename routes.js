@@ -14,6 +14,11 @@ module.exports = function(app,io){
 	 */
 	app.get('/', function(req, res){
 		res.render('index.ejs');
+	
+		var id = Math.round((Math.random() * 1000000));
+
+		// Redirect to the random room
+		res.redirect('/chat/' + id);
 	});
 
 	app.get('/create', function(req,res){
@@ -25,7 +30,7 @@ module.exports = function(app,io){
 	});
 
 	app.get('/chat/:id', function(req,res){
-		res.render('chat.ejs');
+		res.render('index.ejs');
 	});
 
 	// Initialize a new socket.io application, named 'chat'

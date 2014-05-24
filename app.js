@@ -13,6 +13,7 @@ app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/lib', express.static(__dirname + '/public/lib'));
 app.use('/partials', express.static(__dirname + '/public/partials'));
 
+/*
 // redirect root to index
 app.all("/", function(req, res, next) {
   res.sendfile("index.html", { root: __dirname + "/public" });
@@ -22,6 +23,7 @@ app.all("/", function(req, res, next) {
 app.all("/*", function(req, res, next) {
   res.sendfile("chat.html", { root: __dirname + "/public" });
 });
+*/
 
 console.log("Listening on port " + port);
 
