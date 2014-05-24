@@ -23,8 +23,7 @@ require('./routes')(app, io);
 io.sockets.on('connection', function(clntSocket) {
   
   // rejects connection if 2 users already present
-  if(io.sockets.clients().length <= 2)
-  {
+  if(io.sockets.clients().length <= 2) {
     // welcomes on succesful connection
     clntSocket.emit('message', { message: 'Welcome to  CifraChat.' });
   

@@ -32,8 +32,10 @@ module.exports = function(app,io){
 	app.get('/chat/:id', function(req,res){
 		res.render('index.ejs');
 	});
-
+};
+	/** At the moment, this is all done in app.js **/
 	// Initialize a new socket.io application, named 'chat'
+	/**
 	var chat = io.of('/socket').on('connection', function (socket) {
 
 		// When the client emits the 'load' event, reply with the 
@@ -122,4 +124,4 @@ module.exports = function(app,io){
 			socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user});
 		});
 	});
-};
+	**/
