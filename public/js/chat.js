@@ -43,8 +43,6 @@ window.onload = function() {
     var applyButtons = document.getElementsByClassName('apply-message-code');
     var messageCodes = document.getElementsByClassName('message-code');
 
-    console.log(applyButtons)
-
     for (var i = 0; i < applyButtons.length; i++){
       applyButtons.item(i).onclick = function(){
         applyCode(this.parentNode);
