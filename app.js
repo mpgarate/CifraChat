@@ -1,11 +1,14 @@
-var express = require("express");
-var app = express();
 var port = 8080;
 
-/* used this http://stackoverflow.com/questions/4529586/
- * to put in ejs (remember to 'npm install ejs') */ 
+// set up Express and SocketIO
+var express = require('express');
+var io = require('socket.io');
+var app = express();
+	server = require('http').createServer(app);
+	io = io.listen(server);
+server.listen(port);
+
 app.set('views', __dirname + '/views');
-//app.engine('html', require('ejs').renderFile);
 
 // allow access to /public directories
 app.use('/js', express.static(__dirname + '/public/js'));
@@ -13,18 +16,29 @@ app.use('/css', express.static(__dirname + '/public/css'));
 
 console.log("Listening on port " + port);
 
-/* this line passes the ExpressJS server to Socket.io */
-var io = require('socket.io').listen(app.listen(port));
-
+// link to routes.js
 require('./routes')(app, io);
 
-/* socket io stuff */
-io.sockets.on('connection', function (clntSocket) {
+/************** socket io ***************/
+io.sockets.on('connection', function(clntSocket) {
   // welcomes on succesful connection
   clntSocket.emit('message', { message: 'Welcome to CifraChat.' });
+  
+  // let current user know when new user joins
+  io.sockets.on('connection', function() {
+    clntSocket.emit('message', { message: '<b>Other</b> has joined.' });
+  });
   
   // all data sent by the user is forwarded to other users
   clntSocket.on('send', function (text) {
     io.sockets.emit('message', text);
+  });
+
+  // notify Self that somebody left the chat
+  clntSocket.on('disconnect', function() {
+	// forward to other user that this chat partner has left
+	io.sockets.emit('message', { message: '<b>Other</b> has left.' });
+	// leave the room
+	clntSocket.leave(clntSocket.room);
   });
 });
