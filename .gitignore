@@ -26,3 +26,5 @@ node_modules
 
 # Photoshop files
 *.psd
+
+express-angularjs-seed
