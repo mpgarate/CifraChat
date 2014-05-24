@@ -36,7 +36,7 @@ window.onload = function() {
       username: name.value, message: encrypted_msg
     });
     
-    name.value = field.value = ""; // clear fields after sending
+    field.value = ""; // clear message field after sending
   }
 
   // button click and enter key press handlers for form
