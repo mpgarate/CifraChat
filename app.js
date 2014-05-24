@@ -5,10 +5,23 @@ var port = 8080;
 /* used this http://stackoverflow.com/questions/4529586/
  * to put in ejs (remember to 'npm install ejs') */ 
 app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile);
+//app.engine('html', require('ejs').renderFile);
 
-// allow access to /public directory
-app.use('/public', express.static(__dirname + '/public'));
+// allow access to /public directories
+app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/lib', express.static(__dirname + '/public/lib'));
+app.use('/partials', express.static(__dirname + '/public/partials'));
+
+// redirect root to index
+app.all("/", function(req, res, next) {
+  res.sendfile("index.html", { root: __dirname + "/public" });
+});
+
+// redirect all other paths to chat
+app.all("/*", function(req, res, next) {
+  res.sendfile("chat.html", { root: __dirname + "/public" });
+});
 
 console.log("Listening on port " + port);
 
