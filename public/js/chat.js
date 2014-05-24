@@ -26,24 +26,46 @@ window.onload = function() {
       content.innerHTML = html;
       content.scrollTop = content.scrollHeight;
 
-      createCodeEntryHandler();
+      // set click + enter key handlers for applying code to messages in chat window
+      createCodeEntryHandlers();
 
     } else {
       console.log("There is a problem: ", data);
     }
   });
 
-  function createCodeEntryHandler(){
-    $('.apply-message-code').click(function(){
-      var parent = $(this).parent();
-      var message_tag = parent.find(".message");
-      var password = parent.find(".message-code").val();
-      var encrypted_msg = parent.data("encmsg");
+  function applyCode(parent){
+    var message_tag = parent.getElementsByClassName("message").item(0);
+    var password = parent.getElementsByClassName("message-code").item(0).value;
+    var encrypted_msg = parent.dataset.encmsg;
+    var decrypted_msg = decryptMessage(encrypted_msg, password);
 
-      var decrypted_msg = decryptMessage(encrypted_msg, password);
+    message_tag.innerHTML = decrypted_msg;
+  }
 
-      message_tag.html(decrypted_msg);
-    });
+  function createCodeEntryHandlers(){
+
+    var applyButtons = document.getElementsByClassName('apply-message-code');
+    var messageCodes = document.getElementsByClassName('message-code');
+
+    console.log(applyButtons)
+
+    for (var i = 0; i < applyButtons.length; i++){
+      applyButtons.item(i).onclick = function(){
+        applyCode(this.parentNode);
+      };
+    }
+
+    for (var i = 0; i < messageCodes.length; i++){
+      messageCodes.item(i).onkeypress = function(e){
+        // if enter key
+        if (e.keyCode == 13){
+          applyCode(this.parentNode);
+        }
+      };
+    }
+
+
   }
 
   // send a message from the data in the form
@@ -68,6 +90,7 @@ window.onload = function() {
   };
   
   field.onkeypress = function(e){
+    // if enter key
     if (e.keyCode == 13){
       sendMessage();
     }
