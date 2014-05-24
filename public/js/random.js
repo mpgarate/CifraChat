@@ -1,7 +1,6 @@
 // This file is executed in the browser, when people visit /chat/<random id>
 
-$(function(){
-
+(function(){
 	// getting the id of the room from the url
 	var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
@@ -10,6 +9,9 @@ $(function(){
 
 	// variables which hold the data for each person
 	var name = "",
+		email = "",
+		img = "",
+		friend = "";
 
 	// cache some jQuery objects
 	var section = $(".section"),
@@ -45,11 +47,6 @@ $(function(){
 	socket.on('connect', function(){
 
 		socket.emit('load', id);
-	});
-
-	// save the gravatar url
-	socket.on('img', function(data){
-		img = data;
 	});
 
 	// receive the names and avatars of all people in the chat room

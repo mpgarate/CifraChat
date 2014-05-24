@@ -7,13 +7,16 @@
 
 module.exports = function(app,io){
 
+	/* Three routes possible:
+	 *  - / 				(index)
+	 *  - /create 			(redirect to /chat/344567) 
+	 *  - /chat/123456 	(specific chat room)
+	 */
 	app.get('/', function(req, res){
-		// Render views/index.html
 		res.render('index.ejs');
 	});
 
 	app.get('/create', function(req,res){
-
 		// Generate unique id for the room
 		var id = Math.round((Math.random() * 1000000));
 
@@ -22,8 +25,7 @@ module.exports = function(app,io){
 	});
 
 	app.get('/chat/:id', function(req,res){
-		// Render the chat.html view
-		res.render('chat');
+		res.render('chat.ejs');
 	});
 
 	// Initialize a new socket.io application, named 'chat'
