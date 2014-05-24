@@ -16,10 +16,12 @@ app.use('/css', express.static(__dirname + '/public/css'));
 
 console.log("Listening on port " + port);
 
-// link to routes.js
+// linking
 require('./routes')(app, io);
+require('./socket')(app, io);
 
 /************** socket io ***************/
+/*
 io.sockets.on('connection', function(clntSocket) {
   
   // rejects connection if 2 users already present
@@ -48,3 +50,4 @@ io.sockets.on('connection', function(clntSocket) {
 	clntSocket.disconnect(); // force disconnect
   };
 });
+*/
