@@ -46,12 +46,14 @@ window.onload = function() {
   }
 
   function applyCode(parent){
-    var message_tag = parent.getElementsByClassName("message").item(0);
-    var password = parent.getElementsByClassName("message-code").item(0).value;
-    var encrypted_msg = parent.dataset.encmsg;
+    console.log(parent);
+    var message_tag = $(parent).find(".message");
+    console.log(message_tag);
+    var password = $(parent).find(".message-code").val();
+    var encrypted_msg = parent.data("encmsg");
     var decrypted_msg = decryptMessage(encrypted_msg, password);
 
-    message_tag.innerHTML = decrypted_msg;
+    message_tag.html(decrypted_msg);
   }
 
   function createCodeEntryHandlers(){
@@ -61,7 +63,8 @@ window.onload = function() {
 
     for (var i = 0; i < applyButtons.length; i++){
       applyButtons.item(i).onclick = function(){
-        applyCode(this.parentNode.parentNode);
+        var messageWrapper = $(this).parents(".message-wrapper");
+        applyCode(messageWrapper);
       };
     }
 
@@ -69,7 +72,8 @@ window.onload = function() {
       messageCodes.item(i).onkeypress = function(e){
         // if enter key
         if (e.keyCode == 13){
-          applyCode(this.parentNode.parentNode);
+          var messageWrapper = $(this).parents(".message-wrapper");
+          applyCode(messageWrapper);
         }
       };
     }

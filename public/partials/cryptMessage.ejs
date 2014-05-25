@@ -1,16 +1,27 @@
 <div class="panel panel-default message-wrapper" data-encmsg="<%= message %>">
-  <div class="panel-heading">
-    <strong>
-      Other
-    </strong>
+  <div class="panel-heading code-panel">
+    <div class="row">
+      <div class="col col-sm-4">
+        <div class="code-author-label">
+          <strong>
+            Other
+          </strong>
+        </div>
+      </div>
+      <div class="col col-sm-8">
+        <div class="input-group">
+          <input type="text" class="form-control input-box message-code">
+          <span class="input-group-btn">
+            <button class="btn btn-default apply-message-code" type="button">Apply</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+    </div><!-- /row -->
   </div>
   <div class="panel-body">
-    <input class="input-box message-code">
-    <input type="button" class="apply-message-code" value="apply">
     <br />
     <p class="message">
       <%= message %>
     </p>
   </div>
 </div>
-<br />

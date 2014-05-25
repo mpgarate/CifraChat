@@ -4,7 +4,7 @@
 	width: 100%;
 	height: 500px;
 	margin: 20px auto;
-	overflow:auto;
+	overflow: auto;
 }
 /*
 .input-box
@@ -15,4 +15,24 @@
 
 p {
   word-wrap: break-word;
+}
+
+
+/* reduce height of decode input to fit in panel */
+
+.message-code{
+  height: 30px;
+}
+
+.apply-message-code{
+  height: 30px;
+  padding: 4px 12px;
+}
+
+.code-panel {
+  padding: 4px;
+}
+
+.code-author-label{
+  padding: 6px 0 0 12px;
 }
