@@ -22,16 +22,16 @@ window.onload = function() {
   
   // handle unencrypted message
   socket.on('message', function (data) {
-    render_message_partial('/partials/message.ejs', data);
+    renderMessagePartial('/partials/message.ejs', data);
   });
   
   // handle encrypted message
   socket.on('cryptMessage', function (data) {
-    render_message_partial('/partials/cryptMessage.ejs', data);
+    renderMessagePartial('/partials/cryptMessage.ejs', data);
     createCodeEntryHandlers();
   });
 
-  function render_message_partial(path,data){
+  function renderMessagePartial(path,data){
     if(data.message) {
       var html = content.innerHTML;
       
@@ -46,14 +46,12 @@ window.onload = function() {
   }
 
   function applyCode(parent){
-    console.log(parent);
-    var message_tag = $(parent).find(".message");
-    console.log(message_tag);
-    var password = $(parent).find(".message-code").val();
-    var encrypted_msg = parent.data("encmsg");
-    var decrypted_msg = decryptMessage(encrypted_msg, password);
+    var messageTag = parent.find(".message");
+    var password = parent.find(".message-code").val();
+    var encryptedMsg = parent.data("encmsg");
+    var decryptedMsg = decryptMessage(encryptedMsg, password);
 
-    message_tag.html(decrypted_msg);
+    messageTag.html(decryptedMsg);
   }
 
   function createCodeEntryHandlers(){
@@ -85,10 +83,10 @@ window.onload = function() {
     var message = field.value;
     var password = passwordField.value;
     
-    var encrypted_msg = encryptMessage(message,password);
+    var encryptedMsg = encryptMessage(message,password);
 
     socket.emit('send', {
-      message: encrypted_msg
+      message: encryptedMsg
     });
     
     field.value = ""; // clear message field after sending
