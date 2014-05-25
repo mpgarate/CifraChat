@@ -5,7 +5,7 @@
 	var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
 	// connect to the socket
-	var socket = io.connect('/socket');
+	var socket = io.connect('/' + id);
 
 	// variables which hold the data for each person
 	var name = "",

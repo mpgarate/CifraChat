@@ -1,10 +1,20 @@
 window.onload = function() {
   var messages = [];
-  var socket = io.connect('http://localhost:8080');
   var field = document.getElementById("field");
   var sendButton = document.getElementById("send");
   var content = document.getElementById("content");
   var passwordField = document.getElementById("password");
+   
+  // get chat room ID from URL
+  var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
+
+  // connect to socket
+  var socket = io.connect('/chat');
+
+  // send ID to server on connect
+  socket.on('connect', function(){
+	socket.emit('joinRoom', id);
+  });
   
   socket.on('message', function (data) {
     if(data.message) {
@@ -57,8 +67,6 @@ window.onload = function() {
         }
       };
     }
-
-
   }
 
   // send a message from the data in the form

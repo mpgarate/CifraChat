@@ -1,32 +1,44 @@
+// This file is required by app.js. 
+// It handles all the socketIO logic for CifraChat.
 
-module.exports = function(app,io){
+module.exports = function(app, io)
+{
+	var chat = io.of('/chat').on('connection', function(clntSocket) {
 
-	io.sockets.on('connection', function(clntSocket) {
+	  // each client is put into a chat room
+	  clntSocket.on('joinRoom', function(room_id)
+	  {
+		// client may only join room if it's not full
+		if (chat.clients(room_id).length >= 2)
+		{
+			clntSocket.emit('message', { message: 'This room is full.' });
+			clntSocket.disconnect(); // force disconnect
+		}
+		else
+		{
+			clntSocket.join(room_id);
 	  
-	  // rejects connection if 2 users already present
-	  if(io.sockets.clients().length <= 2) {
-		// welcomes on succesful connection
-		clntSocket.emit('message', { message: 'Welcome to  CifraChat.' });
-	  
-		// let current user know when new user joins
-		io.sockets.on('connection', function() {
-		  clntSocket.emit('message', { message: '<b>Other</b> has joined.' });
-		});
-	  
-		// all data sent by the user is forwarded to other users
-		clntSocket.on('send', function (text) {
-		  io.sockets.emit('message', text);
-		});
+			// welcomes client on succesful connection
+			clntSocket.emit('message', { message: 'Welcome to  CifraChat.' });
+		  
+			// let other user know that client joined
+			clntSocket.broadcast.to(room_id).emit('message', { message: '<b>Other</b> has joined.' });
+		  
+		    /** sending **/
+			clntSocket.on('send', function (text) {
+				// all data sent by client is sent to room
+				clntSocket.broadcast.to(room_id).emit('message', text);
+				// and then simply shown to client
+				clntSocket.emit('message', text);
+			});
 
-		// notify Self that somebody left the chat
-		clntSocket.on('disconnect', function() {
-			// forward to other user that this chat partner has left
-			io.sockets.emit('message', { message: '<b>Other</b> has left.' });
-		});
-	  }
-	  else {
-		clntSocket.emit('message', { message: 'This room is full.' });
-		clntSocket.disconnect(); // force disconnect
-	  };
-	});
+			/** disconnecting **/
+			// notify others that somebody left the chat
+			clntSocket.on('disconnect', function() {
+				// forward to other user that this chat partner has left
+				clntSocket.broadcast.to(this.room).emit('message', { message: '<b>Other</b> has left.' });
+			});
+		};
+	  });
+	});	
 };
