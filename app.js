@@ -15,6 +15,7 @@ app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/inc', express.static(__dirname + '/public/inc'));
 app.use('/partials', express.static(__dirname + '/public/partials'));
+app.use('/img', express.static(__dirname + '/public/img'));
 
 console.log("Listening on port " + port);
 

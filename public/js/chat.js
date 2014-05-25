@@ -10,14 +10,14 @@ window.onload = function() {
   var passwordField = document.getElementById("password");
 
   // get chat room ID from URL
-  var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
+  var room_id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
   // connect to socket
   var socket = io.connect('/chat');
 
   // send ID to server on connect
   socket.on('connect', function(){
-	socket.emit('joinRoom', id);
+	socket.emit('joinRoom', room_id);
   });
   
   // handle unencrypted message
@@ -27,7 +27,7 @@ window.onload = function() {
   
   // handle encrypted message
   socket.on('cryptMessage', function (data) {
-    render_message_partial('/partials/cryptMessage.ejs',data);
+    render_message_partial('/partials/cryptMessage.ejs', data);
     createCodeEntryHandlers();
   });
 
@@ -79,8 +79,8 @@ window.onload = function() {
 
   function sendMessage(){
     var message = field.value;
-
     var password = passwordField.value;
+    
     var encrypted_msg = encryptMessage(message,password);
 
     socket.emit('send', {

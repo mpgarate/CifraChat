@@ -1,27 +1,5 @@
-<html>
-  <head>
-    <title>CifraChat</title>
-    <link href="/css/chat.css" rel="stylesheet">
+<%- include header.ejs %>
 
-    <!-- Includes -->
-    <script type="text/javascript" src="/inc/aes.js"></script>
-    <script type="text/javascript" src="/inc/ejs_0.9_alpha_1_production.js"></script>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<%- include chat.ejs %>
 
-    <!-- CifraChat -->
-    <script type="text/javascript" src="/js/encryption.js"></script>
-    <script type="text/javascript" src="/js/chat.js"></script>
-  </head>
-  <body>
-    <div id="content"></div>
-    
-    <div class="controls">
-      Code:
-      <input class="input-box" id="password"></br>
-      Message:
-      <input class="input-box" id="field">
-      <input type="button" value="send" id="send">
-    </div>
-
-  </body>
-</html>
+<%- include footer.ejs %>
