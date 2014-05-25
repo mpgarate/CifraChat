@@ -4,8 +4,8 @@ var port = 8080;
 var express = require('express');
 var io = require('socket.io');
 var app = express();
-	server = require('http').createServer(app);
-	io = io.listen(server);
+var server = require('http').createServer(app);
+io = io.listen(server);
 server.listen(port);
 
 app.set('views', __dirname + '/views');
