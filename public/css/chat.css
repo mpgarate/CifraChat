@@ -1,5 +1,6 @@
 
-#content
+#content,
+#footer-content
 {
 	width: 100%;
 	height: 500px;
@@ -7,12 +8,10 @@
 	overflow: auto;
 }
 
-/*
 .input-box
 {
 	width: 100%;
 }
-*/
 
 p {
   word-wrap: break-word;
