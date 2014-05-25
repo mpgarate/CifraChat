@@ -1,3 +1,7 @@
+// This script is called when a chat room loads.
+// It handles all the client-side socketIO logic for CifraChat, interacting
+// with the server-side code in socket.js.
+
 window.onload = function() {
   var messages = [];
   var field = document.getElementById("field");

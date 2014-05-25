@@ -1,5 +1,6 @@
 // This file is required by app.js. 
-// It handles all the socketIO logic for CifraChat.
+// It handles all the server-side socketIO logic for CifraChat, interacting
+// with the client-side code in /public/js/chat.js.
 
 module.exports = function(app, io)
 {
