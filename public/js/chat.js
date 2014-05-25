@@ -107,12 +107,12 @@ window.onload = function() {
     field.value = ""; // clear message field after sending
   }
 
-  // button click and enter key press handlers for form
-
+  /** send button click listener for sending a message **/
   sendButton.onclick = function(){
     sendMessage();
   };
   
+  /** enter key listener for sending a message **/
   field.onkeypress = function(e){
     // if enter key
     if (e.keyCode == 13){
