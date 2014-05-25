@@ -39,11 +39,11 @@ p {
 }
 
 /* add margins to panel so that we can have a bootstrap grid inside */
-.message-wrapper{
+.message-wrapper, .footer-content {
   margin-left: 15px;
   margin-right: 15px;
 }
 
-.send-message-form, .footer-content{
+.send-message-form{
   margin:0 -6px 0 0;
 }
