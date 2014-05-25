@@ -32,14 +32,16 @@ module.exports = function(app, io)
 				// and then simply shown to client
 				clntSocket.emit('message', { message: '[sent message]', who: 'Self' });
 			});
-
-			/** disconnecting **/
-			// notify others that somebody left the chat
-			clntSocket.on('disconnect', function() {
-				// forward to other user that this chat partner has left
-				clntSocket.broadcast.to(this.room).emit('message', { message: '<b>Other</b> has left.' });
-			});
 		};
+		
+		/** disconnecting **/
+		// notify others that somebody left the chat
+		clntSocket.on('disconnect', function() {
+			// let room know that this client has left
+			clntSocket.broadcast.to(this.room).emit('message', 
+			{ message: '<b>Other</b> has left.', who: 'Server' });
+		});
+		
 	  });
 	});	
 };
