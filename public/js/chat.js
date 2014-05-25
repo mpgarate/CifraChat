@@ -20,12 +20,12 @@ window.onload = function() {
 	socket.emit('joinRoom', id);
   });
   
-  /** send message without decryption option **/
+  // handle unencrypted message
   socket.on('message', function (data) {
     render_message_partial('/partials/message.ejs', data);
   });
   
-  /** send message with password field for decryption **/
+  // handle encrypted message
   socket.on('cryptMessage', function (data) {
     render_message_partial('/partials/cryptMessage.ejs',data);
     createCodeEntryHandlers();
