@@ -1,16 +1,21 @@
 <div class="row">
   <div class="col-sm-offset-2 col-sm-8">
     <div class="footer-content panel panel-default">
-      <div class="panel-body input-group">	  
-		<input type="text" class="form-control input-box" id="field">
-        
-		<div class="panel-heading controls">
-		  Code:
-		  <input class="input-box" id="password">
-		  Message:
-		  <input type="button" value="send" id="send">
-		</div>
-		
+      <div class="panel-body">	  
+        Message:
+    		<textarea type="text" class="form-control input-box" id="messageField" ></textarea>
+      </div>
+      <div class="panel-footer">
+          <div class="pull-right">
+          <form class="form-inline send-message-form">
+            <div class="form-group">
+              <input type="text" class="form-control input-box" placeholder="Code" id="password">
+            </div>
+            <button class="btn btn-default" type="button" id="send">Send</button>
+          </form>
+          </div>
+          <div class="clearfix">
+          </div>
       </div>
     </div>
   </div>

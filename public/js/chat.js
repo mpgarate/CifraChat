@@ -4,7 +4,7 @@
 
 window.onload = function() {
   var messages = [];
-  var field = document.getElementById("field");
+  var messageField = document.getElementById("messageField");
   var sendButton = document.getElementById("send");
   var content = document.getElementById("content");
   var passwordField = document.getElementById("password");
@@ -56,31 +56,27 @@ window.onload = function() {
 
   function createCodeEntryHandlers(){
 
-    var applyButtons = document.getElementsByClassName('apply-message-code');
     var messageCodes = document.getElementsByClassName('message-code');
+    var messageFields = document.getElementsByClassName('message-code');
 
-    for (var i = 0; i < applyButtons.length; i++){
-      applyButtons.item(i).onclick = function(){
+    $(".apply-message-code").click(function(){
+      var messageWrapper = $(this).parents(".message-wrapper");
+      applyCode(messageWrapper);
+    });
+
+    $(".message-code").keypress(function(e){
+      // if enter key
+      if (e.keyCode == 13){
         var messageWrapper = $(this).parents(".message-wrapper");
         applyCode(messageWrapper);
-      };
-    }
-
-    for (var i = 0; i < messageCodes.length; i++){
-      messageCodes.item(i).onkeypress = function(e){
-        // if enter key
-        if (e.keyCode == 13){
-          var messageWrapper = $(this).parents(".message-wrapper");
-          applyCode(messageWrapper);
-        }
-      };
-    }
+      }
+    });
   }
 
   // send a message from the data in the form
 
   function sendMessage(){
-    var message = field.value;
+    var message = messageField.value;
     var password = passwordField.value;
     
     var encryptedMsg = encryptMessage(message,password);
@@ -89,7 +85,7 @@ window.onload = function() {
       message: encryptedMsg
     });
     
-    field.value = ""; // clear message field after sending
+    messageField.value = ""; // clear message field after sending
   }
 
   /** send button click listener for sending a message **/
@@ -97,8 +93,15 @@ window.onload = function() {
     sendMessage();
   };
   
-  /** enter key listener for sending a message **/
-  field.onkeypress = function(e){
+
+  /** enter key listeners for sending a message **/
+  messageField.onkeypress = function(e){
+    // if enter key
+    if (e.keyCode == 13){
+      sendMessage();
+    }
+  }
+  passwordField.onkeypress = function(e){
     // if enter key
     if (e.keyCode == 13){
       sendMessage();
