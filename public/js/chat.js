@@ -61,7 +61,7 @@ window.onload = function() {
 
     for (var i = 0; i < applyButtons.length; i++){
       applyButtons.item(i).onclick = function(){
-        applyCode(this.parentNode);
+        applyCode(this.parentNode.parentNode);
       };
     }
 
@@ -69,7 +69,7 @@ window.onload = function() {
       messageCodes.item(i).onkeypress = function(e){
         // if enter key
         if (e.keyCode == 13){
-          applyCode(this.parentNode);
+          applyCode(this.parentNode.parentNode);
         }
       };
     }
