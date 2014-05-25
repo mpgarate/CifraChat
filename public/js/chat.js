@@ -4,7 +4,7 @@ window.onload = function() {
   var sendButton = document.getElementById("send");
   var content = document.getElementById("content");
   var passwordField = document.getElementById("password");
-   
+
   // get chat room ID from URL
   var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
@@ -16,7 +16,26 @@ window.onload = function() {
 	socket.emit('joinRoom', id);
   });
   
+  /** send message without decryption option **/
   socket.on('message', function (data) {
+    if(data.message) {
+      var html = content.innerHTML;
+      
+      var m = data.message;
+	  var who = data.who;
+      html += '<b>' + data.who + ': </b>';
+      html += m + '<br>';
+
+      content.innerHTML = html;
+      content.scrollTop = content.scrollHeight;
+
+    } else {
+      console.log("There is a problem: ", data);
+    }
+  });
+  
+  /** send message with password field for decryption **/
+  socket.on('cryptMessage', function (data) {
     if(data.message) {
       var html = content.innerHTML;
       
