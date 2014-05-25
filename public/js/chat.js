@@ -43,6 +43,10 @@ window.onload = function() {
     if(data.message) {
       var html = content.innerHTML;
       
+      var rendered_template = new EJS({url: '/partials/message.ejs'}).render(data);
+      console.log(rendered_template);
+      html += rendered_template;
+      /*
       var m = data.message;
       html += '<div class="message-wrapper" data-encmsg="' + m + '">';
       html += '<b>' + 'Other' + ': </b>';
@@ -50,6 +54,7 @@ window.onload = function() {
       html += '<input type="button" class="apply-message-code" value="apply"><br />';
       html += '<p class="message">';
       html += m + '</p></div><br />';
+      */
 
       content.innerHTML = html;
       content.scrollTop = content.scrollHeight;
