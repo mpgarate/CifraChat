@@ -20,5 +20,5 @@ app.use('/img', express.static(__dirname + '/public/img'));
 console.log("Listening on port " + port);
 
 // linking
-require('./routes')(app, io); // sets up endpoints
 require('./socket')(app, io); // socketIO logic
+require('./routes')(app, io); // sets up endpoints

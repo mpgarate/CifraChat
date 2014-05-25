@@ -44,7 +44,7 @@ module.exports = function(app, io)
 		clntSocket.on('disconnect', function()
 		{
 			// let room know that this client has left
-			clntSocket.broadcast.to(this.room).emit('message', 
+			clntSocket.broadcast.to(room_id).emit('message', 
 				{ message: '<b>Other</b> has left.', sender: 'Server' });
 		});
 	  }); // end joinRoom listener
