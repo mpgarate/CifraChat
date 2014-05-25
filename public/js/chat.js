@@ -22,50 +22,28 @@ window.onload = function() {
   
   /** send message without decryption option **/
   socket.on('message', function (data) {
-    if(data.message) {
-      var html = content.innerHTML;
-      
-      var m = data.message;
-	  var who = data.who;
-      html += '<b>' + data.who + ': </b>';
-      html += m + '<br>';
-
-      content.innerHTML = html;
-      content.scrollTop = content.scrollHeight;
-
-    } else {
-      console.log("There is a problem: ", data);
-    }
+    render_message_partial('/partials/message.ejs', data);
   });
   
   /** send message with password field for decryption **/
   socket.on('cryptMessage', function (data) {
+    render_message_partial('/partials/cryptMessage.ejs',data);
+    createCodeEntryHandlers();
+  });
+
+  function render_message_partial(path,data){
     if(data.message) {
       var html = content.innerHTML;
       
-      var rendered_template = new EJS({url: '/partials/message.ejs'}).render(data);
-      console.log(rendered_template);
-      html += rendered_template;
-      /*
-      var m = data.message;
-      html += '<div class="message-wrapper" data-encmsg="' + m + '">';
-      html += '<b>' + 'Other' + ': </b>';
-      html += '<input class="input-box message-code">';
-      html += '<input type="button" class="apply-message-code" value="apply"><br />';
-      html += '<p class="message">';
-      html += m + '</p></div><br />';
-      */
+      html += new EJS({url: path}).render(data);
 
       content.innerHTML = html;
       content.scrollTop = content.scrollHeight;
 
-      // set click + enter key handlers for applying code to messages in chat window
-      createCodeEntryHandlers();
-
     } else {
       console.log("There is a problem: ", data);
     }
-  });
+  }
 
   function applyCode(parent){
     var message_tag = parent.getElementsByClassName("message").item(0);

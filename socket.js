@@ -13,7 +13,7 @@ module.exports = function(app, io)
 		if (chat.clients(room_id).length >= 2)
 		{
 			clntSocket.emit('message', { message: 'This room is full.', 
-				who: 'Server' });
+				sender: 'Server' });
 			clntSocket.disconnect(); // force disconnect
 		}
 		else
@@ -22,11 +22,11 @@ module.exports = function(app, io)
 	  
 			// welcomes client on succesful connection
 			clntSocket.emit('message', { message: 'Welcome to  CifraChat.', 
-				who: 'Server' });
+				sender: 'Server' });
 		  
 			// let other user know that client joined
 			clntSocket.broadcast.to(room_id).emit('message', 
-				{ message: '<b>Other</b> has joined.', who: 'Server' });
+				{ message: '<b>Other</b> has joined.', sender: 'Server' });
 		  
 		    /** sending **/
 			clntSocket.on('send', function (text)
@@ -35,7 +35,7 @@ module.exports = function(app, io)
 				clntSocket.broadcast.to(room_id).emit('cryptMessage', text);
 				// and then simply shown to client
 				clntSocket.emit('message', { message: '[sent message]', 
-					who: 'Self' });
+					sender: 'Self' });
 			});
 		};
 			  
@@ -45,7 +45,7 @@ module.exports = function(app, io)
 		{
 			// let room know that this client has left
 			clntSocket.broadcast.to(this.room).emit('message', 
-				{ message: '<b>Other</b> has left.', who: 'Server' });
+				{ message: '<b>Other</b> has left.', sender: 'Server' });
 		});
 	  }); // end joinRoom listener
 	});	
