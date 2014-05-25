@@ -29,10 +29,16 @@ p {
   padding: 4px 12px;
 }
 
-.code-panel {
+.code-panel-heading {
   padding: 4px;
 }
 
 .code-author-label{
   padding: 6px 0 0 12px;
+}
+
+/* add margins to panel so that we can have a bootstrap grid inside */
+.message-wrapper{
+  margin-left: 15px;
+  margin-right: 15px;
 }
