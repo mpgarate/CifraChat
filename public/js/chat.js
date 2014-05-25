@@ -1,12 +1,45 @@
+// This script is called when a chat room loads.
+// It handles all the client-side socketIO logic for CifraChat, interacting
+// with the server-side code in socket.js.
+
 window.onload = function() {
   var messages = [];
-  var socket = io.connect('http://localhost:8080');
   var field = document.getElementById("field");
   var sendButton = document.getElementById("send");
   var content = document.getElementById("content");
   var passwordField = document.getElementById("password");
+
+  // get chat room ID from URL
+  var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
+
+  // connect to socket
+  var socket = io.connect('/chat');
+
+  // send ID to server on connect
+  socket.on('connect', function(){
+	socket.emit('joinRoom', id);
+  });
   
+  /** send message without decryption option **/
   socket.on('message', function (data) {
+    if(data.message) {
+      var html = content.innerHTML;
+      
+      var m = data.message;
+	  var who = data.who;
+      html += '<b>' + data.who + ': </b>';
+      html += m + '<br>';
+
+      content.innerHTML = html;
+      content.scrollTop = content.scrollHeight;
+
+    } else {
+      console.log("There is a problem: ", data);
+    }
+  });
+  
+  /** send message with password field for decryption **/
+  socket.on('cryptMessage', function (data) {
     if(data.message) {
       var html = content.innerHTML;
       
@@ -57,8 +90,6 @@ window.onload = function() {
         }
       };
     }
-
-
   }
 
   // send a message from the data in the form
@@ -76,12 +107,12 @@ window.onload = function() {
     field.value = ""; // clear message field after sending
   }
 
-  // button click and enter key press handlers for form
-
+  /** send button click listener for sending a message **/
   sendButton.onclick = function(){
     sendMessage();
   };
   
+  /** enter key listener for sending a message **/
   field.onkeypress = function(e){
     // if enter key
     if (e.keyCode == 13){
