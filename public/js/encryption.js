@@ -1,5 +1,5 @@
 function encryptMessage(message,password){
-  if (typeof password === 'undefined'){
+  if (password === ''){
     password = "tRe_haxucr6hej8s";
     console.log("replaced password (encrypt)");
   }
@@ -9,7 +9,7 @@ function encryptMessage(message,password){
 }
 
 function decryptMessage(message,password){
-  if (typeof password === 'undefined'){
+  if (password === ''){
     password = "tRe_haxucr6hej8s";
     console.log("replaced password (decrypt)");
   }

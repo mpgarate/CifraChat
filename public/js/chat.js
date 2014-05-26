@@ -17,25 +17,27 @@ window.onload = function() {
 
   // send ID to server on connect
   socket.on('connect', function(){
-	socket.emit('joinRoom', room_id);
+    socket.emit('joinRoom', room_id);
   });
   
   // handle unencrypted message
+  var messageTemplate = new EJS({url: '/partials/message.ejs'})
   socket.on('message', function (data) {
-    renderMessagePartial('/partials/message.ejs', data);
+    renderMessagePartial(messageTemplate, data);
   });
   
   // handle encrypted message
+  var cryptMessageTemplate = new EJS({url: '/partials/cryptMessage.ejs'})
   socket.on('cryptMessage', function (data) {
-    renderMessagePartial('/partials/cryptMessage.ejs', data);
+    renderMessagePartial(cryptMessageTemplate, data);
     createCodeEntryHandlers();
   });
 
-  function renderMessagePartial(path,data){
+  function renderMessagePartial(ejsTemplate,data){
     if(data.message) {
       var html = content.innerHTML;
       
-      html += new EJS({url: path}).render(data);
+      html += ejsTemplate.render(data);
 
       content.innerHTML = html;
       content.scrollTop = content.scrollHeight;
@@ -55,10 +57,6 @@ window.onload = function() {
   }
 
   function createCodeEntryHandlers(){
-
-    var messageCodes = document.getElementsByClassName('message-code');
-    var messageFields = document.getElementsByClassName('message-code');
-
     $(".apply-message-code").click(function(){
       var messageWrapper = $(this).parents(".message-wrapper");
       applyCode(messageWrapper);
