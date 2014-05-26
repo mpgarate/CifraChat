@@ -21,8 +21,7 @@ module.exports = function(app, io)
 			clntSocket.join(room_id);
 	  
 			// welcomes client on succesful connection
-			clntSocket.emit('message', { message: 'Welcome to  CifraChat.', 
-				sender: 'Server' });
+			clntSocket.emit('message', { message: 'Welcome to  CifraChat.', sender: 'Server' });
 		  
 			// let other user know that client joined
 			clntSocket.broadcast.to(room_id).emit('message', 

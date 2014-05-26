@@ -8,7 +8,7 @@ window.onload = function() {
   var sendButton = document.getElementById("send");
   var content = document.getElementById("content");
   var passwordField = document.getElementById("password");
-
+  
   // get chat room ID from URL
   var room_id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
@@ -20,14 +20,14 @@ window.onload = function() {
     socket.emit('joinRoom', room_id);
   });
   
-  // handle unencrypted message
-  var messageTemplate = new EJS({url: '/partials/message.ejs'})
+  // handle displaying unencrypted message
+  var messageTemplate = new EJS({url: '/partials/message.ejs'});
   socket.on('message', function (data) {
     renderMessagePartial(messageTemplate, data);
   });
   
-  // handle encrypted message
-  var cryptMessageTemplate = new EJS({url: '/partials/cryptMessage.ejs'})
+  // handle displaying encrypted message
+  var cryptMessageTemplate = new EJS({url: '/partials/cryptMessage.ejs'});
   socket.on('cryptMessage', function (data) {
     renderMessagePartial(cryptMessageTemplate, data);
     createCodeEntryHandlers();
