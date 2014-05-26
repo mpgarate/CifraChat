@@ -1,7 +1,8 @@
 function encryptMessage(message,password){
   if (password === ''){
-    password = "tRe_haxucr6hej8s";
-    console.log("replaced password (encrypt)");
+    return message;
+	//password = "tRe_haxucr6hej8s";
+    //console.log("replaced password (encrypt)");
   }
 
   var encrypted = CryptoJS.AES.encrypt(message, password);
