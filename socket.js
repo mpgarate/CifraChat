@@ -6,37 +6,53 @@ module.exports = function(app, io)
 {
 	var chat = io.of('/chat').on('connection', function(clntSocket)
 	{
+	  // messages must be numbered to notify each client when their message is decrypted
+	  var messageNum = 1; 	  
+	
 	  // each client is put into a chat room
 	  clntSocket.on('joinRoom', function(room_id)
 	  {
 		// client may only join room only if it's not full
 		if (chat.clients(room_id).length >= 2)
 		{
-			clntSocket.emit('message', { message: 'This room is full.', 
-				sender: 'Server' });
-			clntSocket.disconnect(); // force disconnect
+			clntSocket.emit('serverMessage', {
+				message: 'This room is full.'
+			});
+			// force client to disconnect
+			clntSocket.disconnect();
 		}
 		else
 		{
-			clntSocket.join(room_id);
+			// client joins room specified in URL
+			clntSocket.join(room_id); 
 	  
-			// welcomes client on succesful connection
-			clntSocket.emit('message', { message: 'Welcome to  CifraChat.', sender: 'Server' });
+			// welcome client on succesful connection
+			clntSocket.emit('serverMessage', {
+				message: 'Welcome to  CifraChat.'
+			});
 		  
 			// let other user know that client joined
-			clntSocket.broadcast.to(room_id).emit('message', 
-				{ message: '<b>Other</b> has joined.', sender: 'Server' });
+			clntSocket.broadcast.to(room_id).emit('serverMessage', {
+				message: '<b>Other</b> has joined.'
+			});
 		  
 		    /** sending **/
 			clntSocket.on('send', function (text)
 			{
 				// all data sent by client is sent to room
-				clntSocket.broadcast.to(room_id).emit('cryptMessage', {message: text.message, sender: 'Other' });
-				// and then simply shown to client
+				clntSocket.broadcast.to(room_id).emit('cryptMessage', {
+					message: text.message,
+					sender: 'Other',
+					number: messageNum
+				});
+				// and then shown to client
 				clntSocket.emit('cryptMessage', {
 					message: text.message, 
-					sender: 'Self'
+					sender: 'Self',
+					number: messageNum
 				});
+				
+				messageNum++;
 			});
 		};
 			  
@@ -45,8 +61,9 @@ module.exports = function(app, io)
 		clntSocket.on('disconnect', function()
 		{
 			// let room know that this client has left
-			clntSocket.broadcast.to(room_id).emit('message', 
-				{ message: '<b>Other</b> has left.', sender: 'Server' });
+			clntSocket.broadcast.to(room_id).emit('serverMessage', {
+					message: '<b>Other</b> has left.'
+				});
 		});
 	  }); // end joinRoom listener
 	});	

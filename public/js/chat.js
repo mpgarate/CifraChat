@@ -33,10 +33,17 @@ window.onload = function() {
     createCodeEntryHandlers();
   });
 
+  // handle displaying server messages (always unencrypted)
+  socket.on('serverMessage', function (data) {
+    data.sender = 'Server';
+	data.number = 0;
+    renderMessagePartial(messageTemplate, data);
+  });
+  
   function renderMessagePartial(ejsTemplate,data){
     if(data.message) {
       var html = content.innerHTML;
-      
+	  
       html += ejsTemplate.render(data);
 
       content.innerHTML = html;
@@ -71,8 +78,7 @@ window.onload = function() {
     });
   }
 
-  // send a message from the data in the form
-
+  /** called when client chooses to send message: triggers the 'send' listener on the server side and passes it the values in the DOM **/
   function sendMessage(){
     var message = messageField.value;
     var password = passwordField.value;
