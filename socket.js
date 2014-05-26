@@ -31,7 +31,7 @@ module.exports = function(app, io)
 			clntSocket.on('send', function (text)
 			{
 				// all data sent by client is sent to room
-				clntSocket.broadcast.to(room_id).emit('cryptMessage', text);
+				clntSocket.broadcast.to(room_id).emit('cryptMessage', {message: text.message, sender: 'Other' });
 				// and then simply shown to client
 				clntSocket.emit('cryptMessage', {
 					message: text.message, 
