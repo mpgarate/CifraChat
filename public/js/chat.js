@@ -35,10 +35,10 @@ window.onload = function() {
   });
 
   // handle displaying server messages (always unencrypted)
+  var serverMessageTemplate = new EJS({url: '/partials/serverMessage.ejs'});
   socket.on('serverMessage', function (data) {
     data.sender = 'Server';
-	data.number = 0;
-    renderMessagePartial(messageTemplate, data);
+    renderMessagePartial(serverMessageTemplate, data);
   });
   
   // notify client(s) when a message is decrypted
