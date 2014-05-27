@@ -22,7 +22,7 @@ window.onload = function() {
   
   /** message sending & receiving/displaying code **/
   // handle displaying unencrypted message
-  var messageTemplate = new EJS({url: '/partials/message.ejs'});
+  var messageTemplate = new EJS({url: '/partials/noncryptMessage.ejs'});
   socket.on('noncryptMessage', function (data) {
     renderMessagePartial(messageTemplate, data);
   });
@@ -44,8 +44,10 @@ window.onload = function() {
   // notify client(s) when a message is decrypted
   socket.on('markDecryption', function(element_id) {
 	var element;
-	if (element = document.getElementById(element_id)) {
-	  element.style.color = "#FF0000";
+	if (element = $('#' + element_id)) {
+	  // visually identify messages that have been decrypted
+	  element.css("color", "#556253");
+	  element.css("background-color", "#d8eedd");
 	}
   });
   
