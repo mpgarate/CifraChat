@@ -20,9 +20,10 @@ window.onload = function() {
     socket.emit('joinRoom', room_id);
   });
   
+  /** message sending & receiving/displaying code **/
   // handle displaying unencrypted message
   var messageTemplate = new EJS({url: '/partials/message.ejs'});
-  socket.on('message', function (data) {
+  socket.on('noncryptMessage', function (data) {
     renderMessagePartial(messageTemplate, data);
   });
   
