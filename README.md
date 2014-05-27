@@ -18,4 +18,3 @@ and then check out ```localhost:8080```
 	 * [EJS] (http://embeddedjs.com/)
 	 * [Socket.IO] (http://socket.io/)
  * HTML/CSS/JS + jQuery
- * Google Fonts
