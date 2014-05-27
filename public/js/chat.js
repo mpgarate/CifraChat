@@ -41,6 +41,14 @@ window.onload = function() {
     renderMessagePartial(messageTemplate, data);
   });
   
+  // notify client(s) when a message is decrypted
+  socket.on('markDecryption', function(element_id) {
+	var element;
+	if (element = document.getElementById(element_id)) {
+	  element.style.color = "#FF0000";
+	}
+  });
+  
   function renderMessagePartial(ejsTemplate,data){
     if(data.message) {
       var html = content.innerHTML;
@@ -60,10 +68,16 @@ window.onload = function() {
     var password = parent.find(".message-code").val();
     var encryptedMsg = parent.data("encmsg");
     var decryptedMsg = decryptMessage(encryptedMsg, password);
+	
+	// if decryption was successful
+	if (decryptedMsg.length > 0) {
+	  var element_id = parent.data("message_id");
+	  socket.emit('confirmDecrypt', element_id);
+	}
 
     messageTag.html(decryptedMsg);
   }
-
+  
   function createCodeEntryHandlers(){
     $(".apply-message-code").click(function(){
       var messageWrapper = $(this).parents(".message-wrapper");

@@ -9,7 +9,7 @@ module.exports = function(app, io)
 {
 	var chat = io.of('/chat').on('connection', function(clntSocket)
 	{		  
-	  // each client is put into a chat room
+	  // each client is put into a chat room restricted to max 2 clients
 	  clntSocket.on('joinRoom', function(room_id)
 	  {
 		// client may only join room only if it's not full
@@ -24,7 +24,7 @@ module.exports = function(app, io)
 		else
 		{
 			// client joins room specified in URL
-			clntSocket.join(room_id); 
+			clntSocket.join(room_id);
 	  
 			// welcome client on succesful connection
 			clntSocket.emit('serverMessage', {
@@ -52,6 +52,12 @@ module.exports = function(app, io)
 				});
 				
 				messageNum++;
+			});
+			
+			/** notifying clients of decryption **/
+			clntSocket.on('confirmDecrypt', function(id) {
+				// let room know which particular message was decrypted
+				chat.in(room_id).emit('markDecryption', id);
 			});
 		};
 			  

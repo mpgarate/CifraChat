@@ -19,11 +19,9 @@ p {
 
 
 /* reduce height of decode input to fit in panel */
-
-.message-code{
+.message-code {
   height: 30px;
 }
-
 
 .apply-message-code{
   height: 30px;
