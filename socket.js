@@ -36,8 +36,8 @@ module.exports = function(app, io)
 				message: '<b>Other</b> has joined.'
 			})
 		  
-		    /** sending **/
-			clntSocket.on('send', function (text) {
+		    /** sending encrypted **/
+			clntSocket.on('cryptSend', function (text) {
 				// all data sent by client is sent to room
 				clntSocket.broadcast.to(room_id).emit('cryptMessage', {
 					message: text.message,
@@ -52,6 +52,22 @@ module.exports = function(app, io)
 				});
 				
 				messageNum++;
+			});
+			
+			/** sending unencrypted **/
+			clntSocket.on('noncryptSend', function (text) {
+				// all data sent by client is sent to room
+				clntSocket.broadcast.to(room_id).emit('noncryptMessage', {
+					message: text.message,
+					sender: 'Other'
+				});
+				// and then shown to client
+				clntSocket.emit('noncryptMessage', {
+					message: text.message, 
+					sender: 'Self'
+				});
+				
+				// unencrypted messages don't increment messageNum because messageNum is only used to identify which message was decrypted
 			});
 			
 			/** notifying clients of decryption **/

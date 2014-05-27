@@ -95,16 +95,22 @@ window.onload = function() {
     });
   }
 
-  /** called when client chooses to send message: triggers the 'send' listener on the server side and passes it the values in the DOM **/
+  /** called when client chooses to send message: triggers the send listeners (cryptSend and noncryptSend) on the server side and passes it the values in the DOM **/
   function sendMessage(){
     var message = messageField.value;
     var password = passwordField.value;
     
-    var encryptedMsg = encryptMessage(message,password);
+	if (password.length > 0) {
+		var encryptedMsg = encryptMessage(message,password);
 
-    socket.emit('send', {
-      message: encryptedMsg
-    });
+		socket.emit('cryptSend', {
+			message: encryptedMsg
+		});
+	} else {
+		socket.emit('noncryptSend', {
+			message: message
+		});
+	}
     
     messageField.value = ""; // clear message field after sending
   }
@@ -113,7 +119,6 @@ window.onload = function() {
   sendButton.onclick = function(){
     sendMessage();
   };
-  
 
   /** enter key listeners for sending a message **/
   messageField.onkeypress = function(e){
