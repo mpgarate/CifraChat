@@ -1,3 +1,15 @@
+.container
+{
+	margin-top: 4%;
+}
+
+.banner
+{
+	text-align: center;
+	width: 350px;
+	float: none;
+	margin: 0 auto;
+}
 
 #content,
 #footer-content
