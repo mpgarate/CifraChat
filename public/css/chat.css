@@ -1,3 +1,8 @@
+html, body{
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+}
+
 .container
 {
 	margin-top: 4%;
@@ -25,10 +30,17 @@
 	width: 100%;
 }
 
+.password-input {
+  height:30px;
+}
+
 p {
   word-wrap: break-word;
 }
 
+.msg-input-panel .panel-footer{
+  padding: 10px 21px;
+}
 
 /* reduce height of decode input to fit in panel */
 .message-code {
@@ -56,4 +68,8 @@ p {
 
 .send-message-form{
   margin:0 -6px 0 0;
+}
+
+.message-wrapper .panel-body{
+  margin-bottom: -12px;
 }
