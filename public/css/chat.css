@@ -2,6 +2,10 @@ html, body{
   font-family: 'Roboto', sans-serif;
 }
 
+.offscreen-text{
+  text-indent: -9999px;
+}
+
 .container
 {
 	margin-top: 70px;
@@ -83,3 +87,12 @@ input.message-code {
 }
 
 .tnav .navbar .container { height: 28px; }
+
+img.nav-logo{
+  height: auto;
+  width: 108px;
+}
+
+.navbar-right, .main-nav-right {
+  margin-right: 0 !important;
+}
