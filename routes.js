@@ -12,6 +12,9 @@ module.exports = function(app, io){
 		res.render('index.ejs');
 	});
 
+	app.get('/about', function(req,res){		
+		res.render('about.ejs');
+	});
 
 	// any other request -> redirect to new chat room
 	app.get('/*', function(req, res){
@@ -20,5 +23,6 @@ module.exports = function(app, io){
 
 		res.redirect('/chat/' + id);
 	});
+
 
 };
