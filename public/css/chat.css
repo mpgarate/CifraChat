@@ -1,6 +1,5 @@
 html, body{
   font-family: 'Roboto', sans-serif;
-  font-size: 13px;
 }
 
 .container
@@ -30,8 +29,9 @@ html, body{
 	width: 100%;
 }
 
-.password-input {
+.password-input, input.message-code {
   height:30px;
+  font-size: 12px;
 }
 
 p {
@@ -43,7 +43,7 @@ p {
 }
 
 /* reduce height of decode input to fit in panel */
-.message-code {
+input.message-code {
   height: 30px;
 }
 
