@@ -13,7 +13,7 @@ node index.js
 and then check out ```localhost:8080```
 
 ### Stack
- * [Node.js] (http://nodejs.org/) for a 4 line server
+ * [Node.js] (http://nodejs.org/)
 	 * [ExpressJS] (http://expressjs.com)
 	 * [EJS] (http://embeddedjs.com/)
 	 * [Socket.IO] (http://socket.io/)
