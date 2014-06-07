@@ -3,6 +3,12 @@ var port = Number(process.env.PORT || 8080);
 // set up Express and SocketIO
 var express = require('express');
 var io = require('socket.io');
+
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
+
 var app = express();
 var server = require('http').createServer(app);
 io = io.listen(server);
