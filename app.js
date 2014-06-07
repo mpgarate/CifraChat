@@ -1,4 +1,4 @@
-var port = 8080;
+var port = 80;
 
 // set up Express and SocketIO
 var express = require('express');
