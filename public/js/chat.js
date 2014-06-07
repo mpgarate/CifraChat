@@ -4,7 +4,8 @@
 // with the server-side code in socket.js.
 
 window.onload = function() {
-  var messages = {};
+  var messages = [];
+
   var messageField = document.getElementById('messageField');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
@@ -33,6 +34,9 @@ window.onload = function() {
   socket.on('cryptMessage', function (data) {
     renderMessagePartial(cryptMessageTemplate, data);
     createCodeEntryHandlers();
+
+    data.attempts = 0;
+    messages[data.number] = data;
   });
 
   // handle displaying server messages (always unencrypted)
@@ -77,21 +81,21 @@ window.onload = function() {
   function applyCode(parent){
     var messageTag = parent.find('.message');
     var password = parent.find('.message-code').val();
-    var encryptedMsg = parent.data('encmsg');
-    var messageId = parent.data('message_id');
+    var messageId = parent.data('message-id');
+    var messageData = messages[messageId];
 
-    var attempts = Number(parent.data('attempts'));
+    var attempts = messageData.attempts;
     attempts += 1;
-    parent.data('attempts',attempts);
+    messageData.attempts = attempts;
 
     if (attempts >= 3){
-      parent.data('encmsg','destroyed');
-      encryptedMsg = '';
+      messages[messageId].message = 'destroyed';
       messageTag.html('Too many attempts. Message destroyed.');
       socket.emit('confirmMessageDestroy', messageId);
       return;
     }
 
+    var encryptedMsg = messageData.message;
     var decryptedMsg = decryptMessage(encryptedMsg, password);
 	
   	// if decryption was successful
