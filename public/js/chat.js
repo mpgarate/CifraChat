@@ -10,6 +10,7 @@ window.onload = function() {
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
   var passwordField = document.getElementById('password');
+  var ENTER_KEY_CODE = 13;
   
   // get chat room ID from URL
   var room_id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
@@ -117,7 +118,7 @@ window.onload = function() {
 
     $('.message-code').keypress(function(e){
       // if enter key
-      if (e.keyCode == 13){
+      if (e.keyCode == ENTER_KEY_CODE){
         var messageWrapper = $(this).parents('.message-wrapper');
         applyCode(messageWrapper);
       }
@@ -129,17 +130,17 @@ window.onload = function() {
     var message = messageField.value;
     var password = passwordField.value;
     
-	if (password.length > 0) {
-		var encryptedMsg = encryptMessage(message,password);
+  	if (password.length > 0) {
+  		var encryptedMsg = encryptMessage(message,password);
 
-		socket.emit('cryptSend', {
-			message: encryptedMsg
-		});
-	} else {
-		socket.emit('noncryptSend', {
-			message: message
-		});
-	}
+  		socket.emit('cryptSend', {
+  			message: encryptedMsg
+  		});
+  	} else {
+  		socket.emit('noncryptSend', {
+  			message: message
+  		});
+  	}
     
     messageField.value = ''; // clear message field after sending
   }
@@ -152,14 +153,16 @@ window.onload = function() {
   /** enter key listeners for sending a message **/
   messageField.onkeypress = function(e){
     // if enter key
-    if (e.keyCode == 13){
+    if (e.keyCode == ENTER_KEY_CODE){
       sendMessage();
+      e.preventDefault();
     }
   };
   passwordField.onkeypress = function(e){
     // if enter key
-    if (e.keyCode == 13){
+    if (e.keyCode == ENTER_KEY_CODE){
       sendMessage();
+      passwordField.value = '';
     }
   };
 };
