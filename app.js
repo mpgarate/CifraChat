@@ -1,4 +1,4 @@
-var port = 80;
+var port = Number(process.env.PORT || 8080);
 
 // set up Express and SocketIO
 var express = require('express');
