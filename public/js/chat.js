@@ -7,6 +7,7 @@ window.onload = function() {
   var messages = [];
 
   var messageField = document.getElementById('messageField');
+  var hintField = document.getElementById('hintField');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
   var passwordField = document.getElementById('password');
@@ -68,6 +69,8 @@ window.onload = function() {
   function renderMessagePartial(ejsTemplate,data){
     if(data.message) {
       var html = content.innerHTML;
+
+      console.log(data);
 	  
       html += ejsTemplate.render(data);
 
@@ -129,12 +132,13 @@ window.onload = function() {
   function sendMessage(){
     var message = messageField.value;
     var password = passwordField.value;
-    
+    var hint = hintField.value;
   	if (password.length > 0) {
   		var encryptedMsg = encryptMessage(message,password);
 
   		socket.emit('cryptSend', {
-  			message: encryptedMsg
+  			message: encryptedMsg,
+        hint: hint
   		});
   	} else {
   		socket.emit('noncryptSend', {

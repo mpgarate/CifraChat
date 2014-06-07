@@ -1,20 +1,32 @@
 <div class="panel panel-default message-wrapper code-panel" data-message-id="<%= number %>">
   <div class="panel-heading code-panel-heading" id="<%= number %>">
     <div class="row">
-      <div class="col col-sm-4">
+      <div class="col col-sm-2">
         <div class="code-author-label">
           <strong>
             <%= sender %>
           </strong>
         </div>
       </div>
-      <div class="col col-sm-offset-4 col-sm-4">
-        <div class="input-group">
-          <input type="password" class="form-control input-box message-code" placeholder="Code">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default apply-message-code" type="button">Apply</button>
-          </span>
-        </div><!-- /input-group -->
+      <div class="col col-sm-6">
+        <% if (hint.length > 0) { %>
+          <p class="hint-text small-input text-right">
+            <strong>Hint:</strong>
+            <%= hint %>
+          </p>
+        <% } %>
+      </div>
+      <div class="col col-sm-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="password" class="form-control input-box small-input message-code" placeholder="Code">
+              <span class="input-group-btn">
+                <button class="btn btn-sm btn-default apply-message-code" type="button">Apply</button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+        </div>
       </div>
     </div><!-- /row -->
   </div>

@@ -56,7 +56,7 @@ html, body{
 	width: 100%;
 }
 
-.password-input, input.message-code {
+.small-input {
   height:30px;
   font-size: 12px;
 }
@@ -118,4 +118,9 @@ img.nav-logo{
 
 .navbar-right, .main-nav-right {
   margin-right: 0 !important;
+}
+
+.hint-text {
+  padding-top: 6px;
+  margin: 0;
 }
