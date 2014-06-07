@@ -1,10 +1,29 @@
 {
-    "name": "CifraChat",
-    "version": "0.0.0",
-    "description": "Encrypted instant messaging",
-    "dependencies": {
-        "socket.io": "latest",
-        "express": "latest"
-    },
-    "author": "developer"
+  "name": "CifraChat",
+  "version": "0.0.1",
+  "description": "Encrypted instant messaging",
+  "dependencies": {
+    "socket.io": "latest",
+    "express": "latest"
+  },
+  "author": "developer",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpgarate/CifraChat.git"
+  },
+  "keywords": [
+    "encrypted",
+    "chat",
+    "software"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mpgarate/CifraChat/issues"
+  },
+  "homepage": "https://github.com/mpgarate/CifraChat"
 }
