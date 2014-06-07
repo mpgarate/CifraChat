@@ -12,8 +12,9 @@ module.exports = function(app, io)
 	  // each client is put into a chat room restricted to max 2 clients
 	  clntSocket.on('joinRoom', function(room_id)
 	  {
+	  	var clientCount = io.of('/chat').clients(room_id).length;
 		// client may only join room only if it's not full
-		if (chat.clients(room_id).length >= 2)
+		if (clientCount >= 2)
 		{
 			clntSocket.emit('serverMessage', {
 				message: 'This room is full.'
