@@ -75,6 +75,10 @@ module.exports = function(app, io)
 				// let room know which particular message was decrypted
 				chat.in(room_id).emit('markDecryption', id);
 			});
+
+			clntSocket.on('confirmMessageDestroy', function(id) {
+				chat.in(room_id).emit('markMessageDestroy', id)
+			});
 		};
 			  
 		/** disconnect listener **/

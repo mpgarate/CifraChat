@@ -4,6 +4,7 @@
 // with the server-side code in socket.js.
 
 window.onload = function() {
+  var messages = {};
   var messageField = document.getElementById('messageField');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
@@ -43,13 +44,21 @@ window.onload = function() {
   
   // notify client(s) when a message is decrypted
   socket.on('markDecryption', function(element_id) {
-  	var element = $('#' + element_id);
-  	if (element) {
-  	  // visually identify messages that have been decrypted
-  	  element.css('color', '#556253');
-  	  element.css('background-color', '#d8eedd');
-  	}
+    changeElementColors(element_id, '#556253', '#d8eedd');
   });
+
+  socket.on('markMessageDestroy', function(element_id) {
+    changeElementColors(element_id, '#625353', '#eed9d8');
+  });
+
+  function changeElementColors(element_id, textColor, backgroundColor){
+    var element = $('#' + element_id);
+    if (element) {
+      // visually identify messages that have been decrypted
+      element.css('color', textColor);
+      element.css('background-color', backgroundColor);
+    }
+  }
   
   function renderMessagePartial(ejsTemplate,data){
     if(data.message) {
@@ -69,12 +78,25 @@ window.onload = function() {
     var messageTag = parent.find('.message');
     var password = parent.find('.message-code').val();
     var encryptedMsg = parent.data('encmsg');
+    var messageId = parent.data('message_id');
+
+    var attempts = Number(parent.data('attempts'));
+    attempts += 1;
+    parent.data('attempts',attempts);
+
+    if (attempts >= 3){
+      parent.data('encmsg','destroyed');
+      encryptedMsg = '';
+      messageTag.html('Too many attempts. Message destroyed.');
+      socket.emit('confirmMessageDestroy', messageId);
+      return;
+    }
+
     var decryptedMsg = decryptMessage(encryptedMsg, password);
 	
   	// if decryption was successful
   	if (decryptedMsg.length > 0) {
-  	  var element_id = parent.data('message_id');
-  	  socket.emit('confirmDecrypt', element_id);
+  	  socket.emit('confirmDecrypt', messageId);
   	}
 
     messageTag.html(decryptedMsg);
