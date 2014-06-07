@@ -1,3 +1,4 @@
+'use strict';
 function encryptMessage(message,password){
   if (password === ''){
     return message;
