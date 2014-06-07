@@ -101,7 +101,10 @@ window.onload = function() {
   	// if decryption was successful
   	if (decryptedMsg.length > 0) {
   	  socket.emit('confirmDecrypt', messageId);
-  	}
+  	} else {
+      var remainingAttempts = 3 - attempts;
+      decryptedMsg = "Incorrect code. " + remainingAttempts + " attempts remaining."
+    }
 
     messageTag.html(decryptedMsg);
   }
