@@ -4,7 +4,8 @@
   "description": "Encrypted instant messaging",
   "dependencies": {
     "socket.io": "latest",
-    "express": "latest"
+    "express": "latest",
+    "ejs": "latest"
   },
   "author": "developer",
   "main": "app.js",
