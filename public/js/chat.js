@@ -70,8 +70,6 @@ window.onload = function() {
     if(data.message) {
       var html = content.innerHTML;
 
-      console.log(data);
-	  
       html += ejsTemplate.render(data);
 
       content.innerHTML = html;
