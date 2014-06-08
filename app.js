@@ -6,7 +6,7 @@ var io = require('socket.io');
 
 var app = express();
 var server = require('http').createServer(app);
-io = io.listen(server);
+io = io.listen(server, { log: false });
 server.listen(port);
 
 app.set('views', __dirname + '/views');
