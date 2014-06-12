@@ -1,4 +1,4 @@
-CifraChat
+[CifraChat](http://cifrachat.herokuapp.com/)
 =========
 
 Encrypted Instant Messaging
