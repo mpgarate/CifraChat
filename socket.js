@@ -42,7 +42,7 @@ module.exports = function(app, io)
 	  
 			// welcome client on succesful connection
 			clntSocket.emit('serverMessage', {
-				message: 'Welcome to  CifraChat.'
+				message: 'Welcome to  CifraChat. Send someone a link to this room to start chatting. Max 2 people per room.'
 			});
 		  
 			// let other user know that client joined
@@ -53,7 +53,7 @@ module.exports = function(app, io)
 			if (clients_in_room == MAX_ALLOWED_CLIENTS){
 				// let everyone know that the max amount of users (2) has been reached
 				chat.in(room_id).emit('serverMessage', {
-					message: 'This room is now full -- there are <b>2</b> users present. No more users can join.'
+					message: 'This room is now full. There are <b>2</b> users present.'
 				});
 			}
 		  

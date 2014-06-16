@@ -1,8 +1,8 @@
 /* This file is required by app.js. 
  * It sets up the application endpoints/routes.
  * 2 routes possible:
-	  - / or /chat/ or /foo				(redirect to random chat room) 
-	  - /chat/123456 							(specific chat room)
+	  - / or or /foo		(redirect to random chat room)
+	  - /chat/123456 		(specific chat room)
  */
 
 module.exports = function(app, io){
