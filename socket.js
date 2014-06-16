@@ -34,7 +34,12 @@ module.exports = function(app, io)
 			// let other user know that client joined
 			clntSocket.broadcast.to(room_id).emit('serverMessage', {
 				message: '<b>Other</b> has joined.'
-			})
+			});	
+			
+			// let everyone know that the max amount of users (2) has been reached
+			chat.in(room_id).emit('serverMessage', {
+				message: 'This room is now full: there are 2 users present. No more users can join.'
+			});
 		  
 		    /** sending encrypted **/
 			clntSocket.on('cryptSend', function (data) {
