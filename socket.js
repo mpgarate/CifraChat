@@ -4,6 +4,7 @@
 
 // messages must be numbered to notify each client when their message is decrypted
 var messageNum = 1;	
+var MAX_ALLOWED_CLIENTS = 2;
 
 module.exports = function(app, io)
 {
@@ -12,8 +13,9 @@ module.exports = function(app, io)
 	  // each client is put into a chat room restricted to max 2 clients
 	  clntSocket.on('joinRoom', function(room_id)
 	  {
+	  	var clients_in_room = chat.clients(room_id).length
 		// client may only join room only if it's not full
-		if (chat.clients(room_id).length >= 2)
+		if (clients_in_room >= MAX_ALLOWED_CLIENTS)
 		{
 			clntSocket.emit('serverMessage', {
 				message: 'This room is full.'
@@ -25,6 +27,8 @@ module.exports = function(app, io)
 		{
 			// client joins room specified in URL
 			clntSocket.join(room_id);
+
+			clients_in_room++;
 	  
 			// welcome client on succesful connection
 			clntSocket.emit('serverMessage', {
@@ -36,10 +40,12 @@ module.exports = function(app, io)
 				message: '<b>Other</b> has joined.'
 			});	
 			
-			// let everyone know that the max amount of users (2) has been reached
-			chat.in(room_id).emit('serverMessage', {
-				message: 'This room is now full: there are 2 users present. No more users can join.'
-			});
+			if (clients_in_room == MAX_ALLOWED_CLIENTS){
+				// let everyone know that the max amount of users (2) has been reached
+				chat.in(room_id).emit('serverMessage', {
+					message: 'This room is now full: there are 2 users present. No more users can join.'
+				});
+			}
 		  
 		    /** sending encrypted **/
 			clntSocket.on('cryptSend', function (data) {
