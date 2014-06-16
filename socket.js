@@ -2,6 +2,16 @@
 // It handles all the server-side socketIO logic for CifraChat, interacting
 // with the client-side code in /public/js/chat.js.
 
+// discussion: https://github.com/Automattic/socket.io/issues/1450
+var roomCount = function(room)
+{
+	var localCount = 0;
+	if (room)
+		for (var id in room)
+			localCount ++;
+	return localCount;
+}
+
 // messages must be numbered to notify each client when their message is decrypted
 var messageNum = 1;	
 var MAX_ALLOWED_CLIENTS = 2;
@@ -13,7 +23,7 @@ module.exports = function(app, io)
 	  // each client is put into a chat room restricted to max 2 clients
 	  clntSocket.on('joinRoom', function(room_id)
 	  {
-	  	var clients_in_room = chat.clients(room_id).length
+	  	var clients_in_room = roomCount(chat.adapter.rooms[room_id]);
 		// client may only join room only if it's not full
 		if (clients_in_room >= MAX_ALLOWED_CLIENTS)
 		{
@@ -43,7 +53,7 @@ module.exports = function(app, io)
 			if (clients_in_room == MAX_ALLOWED_CLIENTS){
 				// let everyone know that the max amount of users (2) has been reached
 				chat.in(room_id).emit('serverMessage', {
-					message: 'This room is now full: there are 2 users present. No more users can join.'
+					message: 'This room is now full -- there are <b>2</b> users present. No more users can join.'
 				});
 			}
 		  

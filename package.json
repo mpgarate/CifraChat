@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Encrypted instant messaging",
   "dependencies": {
-    "socket.io": "0.9.16",
+    "socket.io": "1.0.4",
     "express": "latest",
     "ejs": "latest"
   },
