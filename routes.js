@@ -21,7 +21,7 @@ module.exports = function(app, io){
 		// generate random chat room ID
 		var id = Math.round((Math.random() * 1000000));
 
-		res.redirect('/chat/' + id);
+		res.redirect('chat/' + id);
 	});
 
 

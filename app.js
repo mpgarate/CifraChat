@@ -1,4 +1,4 @@
-var port = Number(process.env.PORT || 8080);
+var port = Number(8888);
 
 // set up Express and SocketIO
 var express = require('express');
@@ -9,6 +9,7 @@ var server = require('http').createServer(app);
 io = io.listen(server, { log: false });
 server.listen(port);
 
+app.enable('trust proxy');
 app.set('views', __dirname + '/views');
 
 // allow access to /public directories
