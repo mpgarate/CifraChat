@@ -9,7 +9,7 @@ npm install
 node app.js
 ```
 
-and then check out ```localhost:8080```
+and then check out ```localhost:8888```
 
 ### Stack
  * [Node.js] (http://nodejs.org/)
